@@ -15,15 +15,22 @@ class _LoginPageState extends State<LoginPage> {
   String _statusLogin = "";
 
   @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("login page")),
+      appBar: AppBar(title: const Text("Login Page")),
       body: Container(
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Welcome to our first app",
               style: TextStyle(
                 fontSize: 15,
@@ -32,29 +39,34 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Center(
-              child: Image.asset('assets/mbeumo.jpg', width: 100, height: 100),
+              child: Image.asset(
+                'assets/mbeumo.jpg',
+                width: 100,
+                height: 100,
+              ),
             ),
-            SizedBox(height: 10),
-            Text("Please enter your username and password"),
+            const SizedBox(height: 10),
+            const Text("Please enter your username and password"),
+            const SizedBox(height: 4),
             TextField(
               controller: _usernameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Username",
                 border: OutlineInputBorder(),
                 prefixIcon: Icon(Icons.person),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: _passwordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Password",
                 border: OutlineInputBorder(),
                 prefixIcon: Icon(Icons.lock),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Center(
               child: ElevatedButton(
                 onPressed: () {
@@ -64,18 +76,18 @@ class _LoginPageState extends State<LoginPage> {
                   if (username == "admin" && password == "admin123") {
                     setState(() {
                       _statusLogin = "sukses login";
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CalculatorPage(),
-                        ),
-                      );
                     });
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text("Login Berhasil\nUsername: $username"),
                         backgroundColor: Colors.green,
-                        duration: Duration(seconds: 2),
+                        duration: const Duration(seconds: 2),
+                      ),
+                    );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CalculatorPage(),
                       ),
                     );
                   } else {
@@ -84,26 +96,30 @@ class _LoginPageState extends State<LoginPage> {
                     });
                   }
                 },
-                child: Text("Login"),
+                child: const Text("Login"),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               _statusLogin,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 15,
                 color: Colors.blueGrey,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()),
-                );
-              },
-              child: Text("Belum punya akun? Daftar di sini"),
+            const SizedBox(height: 8),
+            Center(
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RegisterPage()),
+                  );
+                },
+                icon: const Icon(Icons.app_registration),
+                label: const Text("Register"),
+              ),
             ),
           ],
         ),
