@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
-import 'register.dart';
+import 'package:latihan1/calculator.dart';
+import 'package:latihan1/register.dart';
+import 'package:latihan1/widget/widget_button.dart';
+import 'package:latihan1/widget/widget_textfield.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,22 +17,15 @@ class _LoginPageState extends State<LoginPage> {
   String _statusLogin = "";
 
   @override
-  void dispose() {
-    _usernameController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Login Page")),
+      appBar: AppBar(title: Text("login page")),
       body: Container(
-        margin: const EdgeInsets.all(10),
+        margin: EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               "Welcome to our first app",
               style: TextStyle(
                 fontSize: 15,
@@ -40,33 +35,25 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Center(
               child: Image.asset(
-                'assets/mbeumo.jpg',
+                'assets/logo_flutter.png',
                 width: 100,
                 height: 100,
               ),
             ),
-            const SizedBox(height: 10),
-            const Text("Please enter your username and password"),
-            const SizedBox(height: 4),
-            TextField(
-              controller: _usernameController,
-              decoration: const InputDecoration(
-                hintText: "Username",
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.person),
-              ),
+            SizedBox(height: 10),
+            
+            Text("Please enter your username and password"),
+            MyTextField(
+              textEditingController: _usernameController,
+              labelText: 'Username', 
             ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                hintText: "Password",
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.lock),
-              ),
+            SizedBox(height: 10),
+
+            MyTextField(
+              textEditingController: _passwordController, labelText: 'Password'
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
+
             Center(
               child: ElevatedButton(
                 onPressed: () {
@@ -76,18 +63,18 @@ class _LoginPageState extends State<LoginPage> {
                   if (username == "admin" && password == "admin123") {
                     setState(() {
                       _statusLogin = "sukses login";
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => KalkulatorPage(),
+                        ),
+                      );
                     });
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text("Login Berhasil\nUsername: $username"),
                         backgroundColor: Colors.green,
-                        duration: const Duration(seconds: 2),
-                      ),
-                    );
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CalculatorPage(),
+                        duration: Duration(seconds: 2),
                       ),
                     );
                   } else {
@@ -96,31 +83,41 @@ class _LoginPageState extends State<LoginPage> {
                     });
                   }
                 },
-                child: const Text("Login"),
+                child: Text("Login"),
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Text(
               _statusLogin,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 color: Colors.blueGrey,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 8),
+            Container(
+              margin: EdgeInsets.all(1),
+              child: Center(
+                child: CustomButton(
+                  text: "Register",
+                  textColor: Colors.black,
+                  onPressed: () {
+                    print("Ini Register");
+                  },
+                ),
+              ),
+            ),
             Center(
-              child: ElevatedButton.icon(
+              child: TextButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => RegisterPage()),
                   );
                 },
-                icon: const Icon(Icons.app_registration),
-                label: const Text("Register"),
+                child: const Text("Belum punya akun? Register di sini"),
               ),
-            ),
+            ),            
           ],
         ),
       ),

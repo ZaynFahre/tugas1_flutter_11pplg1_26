@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latihan1/controllers/calculator_controller.dart';
+import 'package:latihan1/roules/roules.dart';
 import 'package:latihan1/widget/widget_button.dart';
 import 'package:latihan1/widget/widget_textfield.dart';
 
@@ -14,11 +15,12 @@ class CalculatorPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("My Calculator"),),
       body: Container(
+        padding: EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            MyTextField(textEditingController: calculatorController.txtAngka1, labelText: "input angka 1", IsPassword: false,),
-            MyTextField(textEditingController: calculatorController.txtAngka2, labelText: "input angka 2", IsPassword: false,),
+            MyTextField(textEditingController: calculatorController.txtAngka1, labelText: "input angka 1"),
+            MyTextField(textEditingController: calculatorController.txtAngka2, labelText: "input angka 2"),
             Container(
               margin: EdgeInsets.all(10),
               child: Row(
@@ -27,7 +29,7 @@ class CalculatorPage extends StatelessWidget {
                     calculatorController.tambah();
                   },),
                   CustomButton(text: "-", textColor: Colors.blue, onPressed: () {
-                    
+                    calculatorController.kurang();
                   },),
                 ],
               ),
@@ -37,20 +39,21 @@ class CalculatorPage extends StatelessWidget {
               child: Row(
                 children: [
                   CustomButton(text: "X", textColor: Colors.blue, onPressed: () {
-                    
+                    calculatorController.kali();
                   },),
                   CustomButton(text: "/", textColor: Colors.blue, onPressed: () {
-                    
+                    calculatorController.bagi();
                   },),
                 ],
               ),
             ),
-            // render UI berada di wrap OBX
-            Obx(() => Text("Hasil "+calculatorController.hasil.value)),
+            Obx(() => Text("Hasil "+calculatorController.hasilJumlah.value)),
             CustomButton(text: "Clear", textColor: Colors.green, onPressed: () {
-              
-            }, )
-      
+              calculatorController.clear();
+            }, ),
+            CustomButton(text: "Move to football players", textColor: Colors.blue, onPressed: () {
+              Get.offAllNamed(AppRoutes.footballplayers);
+            }, )       
           ],
         ),
       ),

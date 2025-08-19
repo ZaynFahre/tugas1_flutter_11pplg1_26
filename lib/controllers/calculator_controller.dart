@@ -4,13 +4,47 @@ import 'package:get/get.dart';
 class CalculatorController extends GetxController {
   final txtAngka1 = TextEditingController();
   final txtAngka2 = TextEditingController();
-  var hasil = "".obs;
+  var hasilJumlah = "".obs;
 
   void tambah() {
-    int angka1 = int.parse(txtAngka1.text.toString());
-    int angka2 = int.parse(txtAngka2.text.toString());
+    int angka1 = int.tryParse(txtAngka1.text) ?? 0;
+    int angka2 = int.tryParse(txtAngka2.text) ?? 0;
+    int hasil = angka1 + angka2;
 
-    int hasilJumlah = angka1 + angka2;
-    hasil.value = hasilJumlah.toString();
-}
+    print("hasil tambah = $hasil");
+
+    hasilJumlah.value = hasil.toString(); 
+  }
+  void kurang() {
+    int angka1 = int.tryParse(txtAngka1.text) ?? 0;
+    int angka2 = int.tryParse(txtAngka2.text) ?? 0;
+    int hasil = angka1 - angka2;
+
+    print("hasil tambah = $hasil");
+
+    hasilJumlah.value = hasil.toString(); 
+  }
+  void kali() {
+    int angka1 = int.tryParse(txtAngka1.text) ?? 0;
+    int angka2 = int.tryParse(txtAngka2.text) ?? 0;
+    int hasil = angka1 * angka2;
+
+    print("hasil tambah = $hasil");
+
+    hasilJumlah.value = hasil.toString(); 
+  }
+  void bagi() {
+    int angka1 = int.tryParse(txtAngka1.text) ?? 0;
+    int angka2 = int.tryParse(txtAngka2.text) ?? 0;
+    double hasil = angka1 / angka2;
+
+    print("hasil tambah = $hasil");
+
+    hasilJumlah.value = hasil.toString(); 
+  }
+  void clear(){
+    txtAngka1.clear();
+    txtAngka2.clear();
+    hasilJumlah.value = "";
+  }
 }
